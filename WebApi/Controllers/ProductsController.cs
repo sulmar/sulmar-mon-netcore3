@@ -10,7 +10,7 @@ namespace WebApi.Controllers
     [Route("api/products")]
     public class ProductsController : ControllerBase
     {
-        private IProductRepository productRepository;
+        private readonly IProductRepository productRepository;
 
         public ProductsController(IProductRepository productRepository)
         {

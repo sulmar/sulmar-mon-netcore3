@@ -18,6 +18,11 @@ namespace Infrastucture
             entities.Add(entity);
         }
 
+        public bool Exists(int id)
+        {
+            return entities.Any(e => e.Id == id);
+        }
+
         public IEnumerable<TEntity> Get()
         {
             return entities;

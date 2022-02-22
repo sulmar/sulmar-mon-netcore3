@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using Domain;
 using System;
 using Domain.SearchCriterias;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApi.Controllers
 {
+    [ApiController]
     [Route("api/customers")]
     public class CustomersController
     {
-        private ICustomerRepository customerRepository;
+        private readonly ICustomerRepository customerRepository;
 
         public CustomersController(
             ICustomerRepository customerRepository
@@ -40,6 +42,9 @@ namespace WebApi.Controllers
 
         // GET api/customers/{pesel}
         [HttpGet("{pesel:length(11):required}", Name = "GetCustomerByPesel")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public ActionResult<Customer> Get(string pesel)
         {
             Customer customer = customerRepository.Get(pesel);
@@ -52,6 +57,8 @@ namespace WebApi.Controllers
 
         // GET api/customers/{id}
         [HttpGet("{id:int:maxlength(10)}", Name = "GetCustomerById")]
+        [ProducesResponseType(typeof(Customer), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Customer> Get(int id)
         {
             Customer customer = customerRepository.Get(id);
@@ -83,6 +90,8 @@ namespace WebApi.Controllers
         // POST api/customers
         // {customer}
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesDefaultResponseType]
         public ActionResult<Customer> Post([FromBody] Customer customer)
         {
             customerRepository.Add(customer);
@@ -95,6 +104,9 @@ namespace WebApi.Controllers
 
         // PUT api/customers/{id}
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public ActionResult Put(int id, [FromBody] Customer customer)
         {
             if (id != customer.Id)
@@ -121,6 +133,14 @@ namespace WebApi.Controllers
             return new OkResult();
         }
 
+        [HttpHead("{id}")]
+        public ActionResult Head(int id)
+        {
+            if (customerRepository.Exists(id))
+                return new OkResult();
+            else
+                return new NotFoundResult();
+        }
       
 
     }

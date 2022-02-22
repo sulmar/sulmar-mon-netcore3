@@ -30,6 +30,11 @@ namespace Infrastucture
             customers.Add(customer);
         }
 
+        public bool Exists(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Customer> Get()
         { 
             return customers

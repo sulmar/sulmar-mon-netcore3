@@ -9,6 +9,7 @@ namespace Domain
         void Add(TEntity entity);
         void Update(TEntity entity);
         void Remove(int id);
+        bool Exists(int id);
     }
 
 
