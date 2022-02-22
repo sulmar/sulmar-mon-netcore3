@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace WebApi.Controllers
 {
     [Route("api/products")]
-    public class ProductsController
+    public class ProductsController : ControllerBase
     {
         private IProductRepository productRepository;
 
@@ -37,7 +37,9 @@ namespace WebApi.Controllers
             if (product == null)
                 return new NotFoundResult();
 
-            return new OkObjectResult(product);
+            // return new OkObjectResult(product);
+
+            return Ok(product);
 
         }
 
@@ -58,7 +60,9 @@ namespace WebApi.Controllers
         {
             productRepository.Add(product);
 
-            return new CreatedAtRouteResult("GetProductById", new { id = product.Id }, product);
+            //  return new CreatedAtRouteResult("GetProductById", new { id = product.Id }, product);
+
+            return CreatedAtRoute("GetProductById", new { id = product.Id }, product);
 
         }
 
@@ -71,7 +75,9 @@ namespace WebApi.Controllers
 
             productRepository.Update(product);
 
-            return new NoContentResult();
+            //  return new NoContentResult();
+
+            return NoContent();
 
             // return new OkObjectResult(customer);
         }
@@ -87,7 +93,9 @@ namespace WebApi.Controllers
 
             productRepository.Remove(id);
 
-            return new OkResult();
+            // return new OkResult();
+
+            return Ok();
         }
 
         // GET api/customers/{id}/products
@@ -96,7 +104,9 @@ namespace WebApi.Controllers
         {
             var products = productRepository.GetByCustomer(id);
 
-            return new OkObjectResult(products);
+            // return new OkObjectResult(products);
+
+            return Ok(products);
 
         }
     }
