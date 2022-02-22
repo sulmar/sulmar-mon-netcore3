@@ -14,6 +14,12 @@ namespace WebApi.Controllers
             this.customerRepository = customerRepository;
         }
 
+        [HttpGet("/api/ping")]
+        public ActionResult<string> Ping()
+        {
+            return "Pong";
+        }
+
 
         // GET api/customers
         [HttpGet]
@@ -23,6 +29,8 @@ namespace WebApi.Controllers
 
             return customers;
         }
+
+       
 
         // GET api/customers/{id}
         [HttpGet("{id}", Name = "GetCustomerById")]
@@ -38,7 +46,7 @@ namespace WebApi.Controllers
         }
 
 
-        // GET api/customers?City=Warsaw
+        // GET api/customers?City=Warsaw&Street=Dworcowa
 
         // GET api/customers/{country}/{city}
 

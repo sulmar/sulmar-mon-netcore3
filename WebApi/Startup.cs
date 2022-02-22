@@ -1,3 +1,4 @@
+using Bogus;
 using Domain;
 using Infrastucture;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +31,8 @@ namespace WebApi
             services.AddControllers();
 
             services.AddSingleton<ICustomerRepository, FakeCustomerRepository>();
+            services.AddSingleton<IProductRepository, FakeProductRepository>();
+            services.AddSingleton<Faker<Product>, ProductFaker>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

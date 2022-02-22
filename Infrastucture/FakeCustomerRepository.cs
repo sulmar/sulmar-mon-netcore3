@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace Infrastucture
 {
+
     public class FakeCustomerRepository : ICustomerRepository
     {
         private ICollection<Customer> customers;
