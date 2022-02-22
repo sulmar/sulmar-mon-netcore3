@@ -34,15 +34,31 @@ namespace WebApi
             services.AddSingleton<IProductRepository, FakeProductRepository>();
             services.AddSingleton<Faker<Product>, ProductFaker>();
 
+            services.Configure<FakeProductRepositoryOptions>(Configuration.GetSection("FakeProductRepositoryOptions"));
+
             // Install-Package Swashbuckle.AspNetCore
             services.AddSwaggerGen();
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            string environmentName = env.EnvironmentName;
+
+            if (env.IsProduction())
+            {
+
+            }
+
+            string privateKey = Configuration["PrivateKey"];
+
+            string host = Configuration["SmsApi:Host"];
+
+            SmsApiOptions smsApi = new SmsApiOptions();
+            
+            Configuration.GetSection("SmsApi").Bind(smsApi);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
