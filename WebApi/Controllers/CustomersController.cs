@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Domain;
+using System;
+using Domain.SearchCriterias;
 
 namespace WebApi.Controllers
 {
@@ -9,7 +11,9 @@ namespace WebApi.Controllers
     {
         private ICustomerRepository customerRepository;
 
-        public CustomersController(ICustomerRepository customerRepository)
+        public CustomersController(
+            ICustomerRepository customerRepository
+            )
         {
             this.customerRepository = customerRepository;
         }
@@ -22,18 +26,32 @@ namespace WebApi.Controllers
 
 
         // GET api/customers
-        [HttpGet]
-        public IEnumerable<Customer> Get()
-        {
-            IEnumerable<Customer> customers = customerRepository.Get();
+        //[HttpGet]
+        //public IEnumerable<Customer> Get()
+        //{
+        //    IEnumerable<Customer> customers = customerRepository.Get();
 
-            return customers;
+        //    return customers;
+        //}
+
+
+        // Route Constraints (reguły tras)
+        // https://docs.microsoft.com/pl-pl/aspnet/core/fundamentals/routing?view=aspnetcore-6.0#route-constraints
+
+        // GET api/customers/{pesel}
+        [HttpGet("{pesel:length(11):required}", Name = "GetCustomerByPesel")]
+        public ActionResult<Customer> Get(string pesel)
+        {
+            Customer customer = customerRepository.Get(pesel);
+
+            if (customer == null)
+                return new NotFoundResult();
+
+            return new OkObjectResult(customer);
         }
 
-       
-
         // GET api/customers/{id}
-        [HttpGet("{id}", Name = "GetCustomerById")]
+        [HttpGet("{id:int:maxlength(10)}", Name = "GetCustomerById")]
         public ActionResult<Customer> Get(int id)
         {
             Customer customer = customerRepository.Get(id);
@@ -42,18 +60,25 @@ namespace WebApi.Controllers
                 return new NotFoundResult();
 
             return new OkObjectResult(customer);
-
         }
 
-
+        // Query params
         // GET api/customers?City=Warsaw&Street=Dworcowa
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Customer>> Get([FromQuery] CustomerSearchCriteria searchCriteria)
+        {
+            var customers = customerRepository.Get(searchCriteria);
+
+            return new OkObjectResult(customers);
+        }
 
         // GET api/customers/{country}/{city}
 
         // GET api/customers/{id}/orders
 
         // GET posts/net-core/fundamentals/hello-world
-        
+
 
         // POST api/customers
         // {customer}
@@ -95,5 +120,8 @@ namespace WebApi.Controllers
 
             return new OkResult();
         }
+
+      
+
     }
 }

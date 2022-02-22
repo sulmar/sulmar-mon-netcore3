@@ -89,5 +89,15 @@ namespace WebApi.Controllers
 
             return new OkResult();
         }
+
+        // GET api/customers/{id}/products
+        [HttpGet("/api/customers/{id}/products")]
+        public ActionResult<IEnumerable<Product>> GetByCustomer(int id)
+        {
+            var products = productRepository.GetByCustomer(id);
+
+            return new OkObjectResult(products);
+
+        }
     }
 }
