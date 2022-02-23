@@ -33,6 +33,7 @@ namespace WebApi
             services.AddSingleton<ICustomerRepository, FakeCustomerRepository>();
             services.AddSingleton<IProductRepository, FakeProductRepository>();
             services.AddSingleton<Faker<Product>, ProductFaker>();
+            services.AddSingleton<IMessageService, SmsMessageService>();
 
             services.Configure<FakeProductRepositoryOptions>(Configuration.GetSection("FakeProductRepositoryOptions"));
 

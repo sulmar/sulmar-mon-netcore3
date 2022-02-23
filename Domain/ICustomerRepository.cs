@@ -13,7 +13,4 @@ namespace Domain
 
         IEnumerable<Customer> Get(CustomerSearchCriteria searchCriteria);
     }
-
-
-
 }
