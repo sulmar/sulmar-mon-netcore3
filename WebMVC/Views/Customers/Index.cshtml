@@ -1,6 +1,76 @@
-﻿
+﻿@model IEnumerable<Domain.Customer>
 
 <h1>Hello Customers!</h1>
 
-Generated on @DateTime.Now
 
+
+@*<ul>
+
+        @foreach (var customer in Model)
+        {
+            <li>
+                @Html.DisplayFor(item => customer.FirstName)
+                @Html.DisplayFor(item => customer.LastName)
+            </li>
+
+        }
+
+    </ul>*@
+
+<table class="table table-dark table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var customer in Model)
+        {
+            string className = customer.IsSalaryOverLimit ? "table-warning" : "";
+            
+            <tr class="@className">
+                <td>
+                    @Html.DisplayFor(item => customer.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(item => customer.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(item => customer.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(item => customer.Salary)
+                </td>
+            </tr>
+
+        }
+
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <th scope="row">Totals</th>
+            <td></td>
+            <td></td>
+            <td>
+                @Model.Sum(c => c.Salary)
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+
+Generated on @DateTime.Now

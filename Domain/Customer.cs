@@ -14,6 +14,9 @@ namespace Domain
         public Address ShipAddress { get; set; }
         public Coordinate Location { get; set; }
 
+        public static decimal SalaryOverLimit = 1000;
+        public bool IsSalaryOverLimit => Salary > SalaryOverLimit;
+
         public Customer()
         {
             InvoiceAddress = new Address();

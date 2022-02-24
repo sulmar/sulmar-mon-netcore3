@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,18 @@ namespace WebMVC.Controllers
     // GET localhost:5001/customers/index
     public class CustomersController : Controller
     {
+        private readonly ICustomerRepository customerRepository;
+
+        public CustomersController(ICustomerRepository customerRepository)
+        {
+            this.customerRepository = customerRepository;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var customers = customerRepository.Get();
+
+            return View(customers);
         }
 
         public IActionResult About()

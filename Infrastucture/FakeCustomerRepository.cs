@@ -15,9 +15,9 @@ namespace Infrastucture
         {
             customers = new List<Customer>()
             {
-                new Customer { Id = 1, FirstName = "John", LastName = "Smith"},
-                new Customer { Id = 2, FirstName = "Ann", LastName = "Smith"},
-                new Customer { Id = 3, FirstName = "Bart", LastName = "Smith"},
+                new Customer { Id = 1, FirstName = "John", LastName = "Smith", Salary = 1000 },
+                new Customer { Id = 2, FirstName = "Ann", LastName = "Smith", Salary = 2000 },
+                new Customer { Id = 3, FirstName = "Bart", LastName = "Smith", Salary = 500 },
             };
         }
 
