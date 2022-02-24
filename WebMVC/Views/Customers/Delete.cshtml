@@ -1,0 +1,9 @@
+﻿@model Domain.Customer
+
+
+<p>Are you sure remove @Model.FirstName @Model.LastName?</p>
+
+<form method="post">
+    <button type="submit" class="btn btn-danger btn-block">Yes</button>
+    <a class="btn btn-primary btn-block" asp-action="Index">No</a>
+</form>

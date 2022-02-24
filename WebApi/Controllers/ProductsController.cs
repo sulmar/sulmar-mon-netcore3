@@ -58,11 +58,17 @@ namespace WebApi.Controllers
         [HttpPost]
         public ActionResult<Product> Post([FromBody] Product product)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             productRepository.Add(product);
 
             //  return new CreatedAtRouteResult("GetProductById", new { id = product.Id }, product);
 
             return CreatedAtRoute("GetProductById", new { id = product.Id }, product);
+
 
         }
 

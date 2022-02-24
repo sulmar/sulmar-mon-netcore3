@@ -9,7 +9,7 @@ namespace WebApi.Controllers
 {
     [ApiController]
     [Route("api/customers")]
-    public class CustomersController
+    public class CustomersController : ControllerBase
     {
         private readonly ICustomerRepository customerRepository;
 
@@ -94,14 +94,21 @@ namespace WebApi.Controllers
         [ProducesDefaultResponseType]
         public ActionResult<Customer> Post([FromServices] IMessageService messageService, [FromBody] Customer customer)
         {
-            customerRepository.Add(customer);
+            if (ModelState.IsValid)
+            {
+                customerRepository.Add(customer);
 
-            // return new CreatedResult($"https://localhost:5001/api/customers/{customer.Id}", customer);
+                // return new CreatedResult($"https://localhost:5001/api/customers/{customer.Id}", customer);
 
-            messageService.Send($"Hello {customer.FirstName}!");
+                messageService.Send($"Hello {customer.FirstName}!");
 
-            return new CreatedAtRouteResult("GetCustomerById", new { id = customer.Id }, customer);
+                return new CreatedAtRouteResult("GetCustomerById", new { id = customer.Id }, customer);
 
+            }
+            else
+            {
+                return new BadRequestObjectResult(ModelState);
+            }
         }
 
         // PUT api/customers/{id}

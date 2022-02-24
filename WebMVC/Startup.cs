@@ -1,3 +1,4 @@
+using Bogus;
 using Domain;
 using Infrastucture;
 using Microsoft.AspNetCore.Builder;
@@ -28,6 +29,10 @@ namespace WebMVC
             services.AddControllersWithViews();
 
             services.AddSingleton<ICustomerRepository, FakeCustomerRepository>();
+            services.AddSingleton<IProductRepository, FakeProductRepository>();
+            services.AddSingleton<Faker<Product>, ProductFaker>();
+
+            services.Configure<FakeProductRepositoryOptions>(Configuration.GetSection("FakeProductRepositoryOptions"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

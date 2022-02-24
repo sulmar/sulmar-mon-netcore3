@@ -1,0 +1,64 @@
+﻿@using Domain
+@model IEnumerable<Domain.Product>
+
+
+<table class="table table-dark table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Color)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var product in Model)
+        {
+            string sizeClassName = product.IsOverSize ? "text-danger" : "";
+
+            // match patterns 
+            string unitPriceClassName = product.GetPriceThreshold() switch
+            {
+                Domain.PriceThreshold.Hight => "bg-danger",
+                Domain.PriceThreshold.Low => "bg-success",
+                _ => ""
+            };
+
+            <tr class="@unitPriceClassName">
+                <td class="text-uppercase">
+                    @product.Name
+                </td>
+                <td>
+                    @product.Color
+                </td>
+                <td class="@sizeClassName">
+                    @product.Size
+                </td>
+                <td>
+                    @product.UnitPrice
+                </td>
+            </tr>
+
+        }
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <th scope="row">Count</th>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
+
+
+</table>

@@ -1,11 +1,14 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
 
     public class Customer : BaseEntity
     {
+        [Required, MinLength(3), MaxLength(20)]
         public string FirstName { get; set; }
+        [Required, MaxLength(20)]
         public string LastName { get; set; }
         public Gender Gender { get; set; }
         public decimal? Salary { get; set; }
@@ -16,6 +19,7 @@ namespace Domain
 
         public static decimal SalaryOverLimit = 1000;
         public bool IsSalaryOverLimit => Salary > SalaryOverLimit;
+        public bool IsRemoved { get; set; }
 
         public Customer()
         {

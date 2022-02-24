@@ -15,9 +15,9 @@ namespace Infrastucture
         {
             customers = new List<Customer>()
             {
-                new Customer { Id = 1, FirstName = "John", LastName = "Smith", Salary = 1000 },
-                new Customer { Id = 2, FirstName = "Ann", LastName = "Smith", Salary = 2000 },
-                new Customer { Id = 3, FirstName = "Bart", LastName = "Smith", Salary = 500 },
+                new Customer { Id = 1, FirstName = "John", LastName = "Smith", Salary = 1000, Pesel = "9434234234324" },
+                new Customer { Id = 2, FirstName = "Ann", LastName = "Smith", Salary = 2000, Pesel = "54545454545", Gender = Gender.Female },
+                new Customer { Id = 3, FirstName = "Bart", LastName = "Smith", Salary = 500, Pesel = "65657756756", IsRemoved = true },
             };
         }
 
@@ -37,10 +37,7 @@ namespace Infrastucture
 
         public IEnumerable<Customer> Get()
         { 
-            return customers
-                .Where(c => c.Gender == Gender.Man)
-                .OrderBy(c => c.FirstName)
-                .ThenBy(c => c.LastName);
+            return customers;
         }
 
         public Customer Get(int id)
@@ -102,9 +99,16 @@ namespace Infrastucture
 
         public void Update(Customer customer)
         {
-            Remove(customer.Id);
+            //Remove(customer.Id);
 
-            customers.Add(customer);
+            //customers.Add(customer);
+
+            Customer existingCustomer = Get(customer.Id);
+            existingCustomer.FirstName = customer.FirstName;
+            existingCustomer.LastName = customer.LastName;
+            existingCustomer.Gender = customer.Gender;
+            existingCustomer.Salary = customer.Salary;
+            existingCustomer.Pesel = customer.Pesel;
         }
     }
 }

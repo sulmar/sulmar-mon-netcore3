@@ -30,5 +30,46 @@ namespace WebMVC.Controllers
             return View();
         }
 
+        public IActionResult Edit(int id)
+        {
+            var customer = customerRepository.Get(id);
+
+            return View(customer);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                customerRepository.Update(customer);
+
+                return RedirectToAction("Index", new { id = customer.Id });
+            }
+            else
+            {
+                return View(customer);
+            }
+        }
+
+        // GET Customers/Delete/{id}
+        public IActionResult Delete(int id)
+        {
+            var customer = customerRepository.Get(id);
+
+            return View(customer);
+        }
+
+        // POST Customers/Delete/{id}
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            customerRepository.Remove(id);
+
+            return RedirectToAction("Index");
+        }
+
+        
+
     }
 }
