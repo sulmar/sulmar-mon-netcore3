@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.DTOs;
+using WebApi.Mappers;
 
 namespace WebApi.Controllers
 {
@@ -24,18 +25,17 @@ namespace WebApi.Controllers
         {
             IEnumerable<Customer> customers = customerRepository.Get();
 
-            ICollection<CustomerDTO> result = new List<CustomerDTO>();
+            var result = customers
+                .Select(customer => CustomerMapper.Map(customer));
 
-            foreach (Customer customer in customers)
-            {
-                CustomerDTO customerDTO = new CustomerDTO
-                {
-                    FirstName = customer.FirstName,
-                    LastName = customer.LastName
-                };
+            //ICollection<CustomerDTO> result = new List<CustomerDTO>();
 
-                result.Add(customerDTO);
-            }
+            //foreach (Customer customer in customers)
+            //{
+            //    CustomerDTO customerDTO = CustomerMapper.Map(customer);
+
+            //    result.Add(customerDTO);
+            //}
 
             return result;
         }
@@ -46,11 +46,7 @@ namespace WebApi.Controllers
         {
             Customer customer = customerRepository.Get(id);
 
-            CustomerDTO customerDTO = new CustomerDTO
-            {
-                FirstName = customer.FirstName,
-                LastName = customer.LastName
-            };
+            CustomerDTO customerDTO = CustomerMapper.Map(customer);
 
             return customerDTO;
         }
