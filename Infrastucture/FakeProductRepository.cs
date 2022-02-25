@@ -28,5 +28,12 @@ namespace Infrastucture
         {
             throw new System.NotImplementedException();
         }
+
+        public override void Remove(int id)
+        {
+            var product = Get(id);
+
+            product.IsRemoved = true;
+        }
     }
 }

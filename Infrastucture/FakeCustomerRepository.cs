@@ -15,9 +15,9 @@ namespace Infrastucture
         {
             customers = new List<Customer>()
             {
-                new Customer { Id = 1, FirstName = "John", LastName = "Smith", Salary = 1000, Pesel = "9434234234324" },
-                new Customer { Id = 2, FirstName = "Ann", LastName = "Smith", Salary = 2000, Pesel = "54545454545", Gender = Gender.Female },
-                new Customer { Id = 3, FirstName = "Bart", LastName = "Smith", Salary = 500, Pesel = "65657756756", IsRemoved = true },
+                new Customer { Id = 1, FirstName = "John", LastName = "Smith", Salary = 1000, Pesel = "9434234234324", HashedPassword = "A1234" },
+                new Customer { Id = 2, FirstName = "Ann", LastName = "Smith", Salary = 2000, Pesel = "54545454545", Gender = Gender.Female, HashedPassword = "B1234" },
+                new Customer { Id = 3, FirstName = "Bart", LastName = "Smith", Salary = 500, Pesel = "65657756756", IsRemoved = true, HashedPassword = "C1234" },
             };
         }
 

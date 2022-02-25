@@ -9,7 +9,7 @@ namespace Infrastucture
     {
         protected ICollection<TEntity> entities;
 
-        public void Add(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
             int id = entities.Max(e => e.Id);
 
@@ -18,27 +18,27 @@ namespace Infrastucture
             entities.Add(entity);
         }
 
-        public bool Exists(int id)
+        public virtual bool Exists(int id)
         {
             return entities.Any(e => e.Id == id);
         }
 
-        public IEnumerable<TEntity> Get()
+        public virtual IEnumerable<TEntity> Get()
         {
             return entities;
         }
 
-        public TEntity Get(int id)
+        public virtual TEntity Get(int id)
         {
             return entities.SingleOrDefault(e => e.Id == id);
         }
 
-        public void Remove(int id)
+        public virtual void Remove(int id)
         {
             entities.Remove(Get(id));
         }
 
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             Remove(entity.Id);
 

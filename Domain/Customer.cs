@@ -19,6 +19,7 @@ namespace Domain
 
         public static decimal SalaryOverLimit = 1000;
         public bool IsSalaryOverLimit => Salary > SalaryOverLimit;
+        public string HashedPassword { get; set; }
         public bool IsRemoved { get; set; }
 
         public Customer()

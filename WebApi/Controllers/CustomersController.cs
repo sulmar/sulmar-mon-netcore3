@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("api/customers")]
+    [Route("api/v1/customers")]
     public class CustomersController : ControllerBase
     {
         private readonly ICustomerRepository customerRepository;
