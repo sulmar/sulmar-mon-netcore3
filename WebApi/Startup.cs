@@ -30,6 +30,8 @@ namespace WebApi
         {
             services.AddControllers();
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddSingleton<ICustomerRepository, FakeCustomerRepository>();
             services.AddSingleton<IProductRepository, FakeProductRepository>();
             services.AddSingleton<Faker<Product>, ProductFaker>();
@@ -39,6 +41,9 @@ namespace WebApi
 
             // Install-Package Swashbuckle.AspNetCore
             services.AddSwaggerGen();
+
+
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

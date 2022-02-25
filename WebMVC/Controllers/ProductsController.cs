@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebMVC.ViewModels;
 
 namespace WebMVC.Controllers
 {
@@ -22,5 +23,15 @@ namespace WebMVC.Controllers
 
             return View(products);
         }
+
+        //public IActionResult Edit(int id)
+        //{
+        //    var product = productRepository.Get(id);
+
+        //    ProductViewModel productViewModel = new ProductViewModel()
+        //    {
+                
+        //    };
+        //}
     }
 }

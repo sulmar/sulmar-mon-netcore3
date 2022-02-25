@@ -4,6 +4,7 @@ using Infrastucture;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,9 +27,17 @@ namespace WebMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Install-Package Microsoft.EntityFramworkCore.SqlServer
+            string connectionString = Configuration.GetConnectionString("ShopConnectionString");
+            services.AddDbContextPool<ShopperContext>(
+                options => options.UseSqlServer(connectionString));
+
             services.AddControllersWithViews();
 
-            services.AddSingleton<ICustomerRepository, FakeCustomerRepository>();
+            // services.AddSingleton<ICustomerRepository, FakeCustomerRepository>();
+
+            services.AddScoped<ICustomerRepository, DbCustomerRepository>();
+
             services.AddSingleton<IProductRepository, FakeProductRepository>();
             services.AddSingleton<Faker<Product>, ProductFaker>();
 
@@ -36,8 +45,15 @@ namespace WebMVC
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ShopperContext context)
         {
+            // context.Database.EnsureDeleted();
+
+            if (context.Database.EnsureCreated())
+            {
+                Console.WriteLine("Created database.");
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

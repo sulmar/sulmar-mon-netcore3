@@ -17,6 +17,7 @@
         public decimal UnitPrice { get; set; }
         public Size Size { get; set; }
         public bool IsRemoved { get; set; }
+        public Customer Brand { get; set; }
 
         public Size OverSize = Size.L;
         public bool IsOverSize => Size >= OverSize;

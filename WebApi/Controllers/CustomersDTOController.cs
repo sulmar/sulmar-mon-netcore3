@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using AutoMapper;
+using Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,10 +15,12 @@ namespace WebApi.Controllers
     public class CustomersDTOController : ControllerBase
     {
         private readonly ICustomerRepository customerRepository;
+        private readonly IMapper mapper;
 
-        public CustomersDTOController(ICustomerRepository customerRepository)
+        public CustomersDTOController(ICustomerRepository customerRepository, IMapper mapper)
         {
             this.customerRepository = customerRepository;
+            this.mapper = mapper;
         }
 
         // GET api/customers
@@ -26,8 +29,10 @@ namespace WebApi.Controllers
         {
             IEnumerable<Customer> customers = customerRepository.Get();
 
-            var result = customers
-                .Select(customer => CustomerMapper.Map(customer));
+            var result = mapper.Map<IEnumerable<CustomerDTO>>(customers);
+
+            //var result = customers
+            //    .Select(customer => CustomerMapper.Map(customer));
 
             //ICollection<CustomerDTO> result = new List<CustomerDTO>();
 
@@ -47,7 +52,9 @@ namespace WebApi.Controllers
         {
             Customer customer = customerRepository.Get(id);
 
-            CustomerDTO customerDTO = CustomerMapper.Map(customer);
+            // CustomerDTO customerDTO = CustomerMapper.Map(customer);
+
+            CustomerDTO customerDTO = mapper.Map<CustomerDTO>(customer);
 
             return customerDTO;
         }

@@ -15,7 +15,8 @@ namespace Domain
         public string Pesel { get; set; }
         public Address InvoiceAddress { get; set; }
         public Address ShipAddress { get; set; }
-        public Coordinate Location { get; set; }
+
+       // public Coordinate Location { get; set; }
 
         public static decimal SalaryOverLimit = 1000;
         public bool IsSalaryOverLimit => Salary > SalaryOverLimit;
@@ -36,7 +37,7 @@ namespace Domain
         public double Altitude { get; set; }
     }
 
-    public class Address : Base
+    public class Address : BaseEntity
     {
         public string City { get; set; }
         public string Street { get; set; }

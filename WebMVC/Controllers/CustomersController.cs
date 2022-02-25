@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace WebMVC.Controllers
 {
 
     // GET localhost:5001/customers/index
+    [Authorize(Roles = "Developer, Trainer")]
     public class CustomersController : Controller
     {
         private readonly ICustomerRepository customerRepository;
@@ -20,11 +22,17 @@ namespace WebMVC.Controllers
 
         public IActionResult Index()
         {
+            if (!this.User.Identity.IsAuthenticated)
+            {
+                return Unauthorized();
+            }
+
             var customers = customerRepository.Get();
 
             return View(customers);
         }
 
+        [AllowAnonymous]
         public IActionResult About()
         {
             return View();
