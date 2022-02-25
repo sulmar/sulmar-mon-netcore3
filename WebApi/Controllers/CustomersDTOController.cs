@@ -39,5 +39,20 @@ namespace WebApi.Controllers
 
             return result;
         }
+
+        // GET api/customers/{id}
+        [HttpGet("{id}")]
+        public CustomerDTO Get(int id)
+        {
+            Customer customer = customerRepository.Get(id);
+
+            CustomerDTO customerDTO = new CustomerDTO
+            {
+                FirstName = customer.FirstName,
+                LastName = customer.LastName
+            };
+
+            return customerDTO;
+        }
     }
 }
