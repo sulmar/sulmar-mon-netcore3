@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,26 @@ namespace WebApi.Controllers
             CustomerDTO customerDTO = CustomerMapper.Map(customer);
 
             return customerDTO;
+        }
+
+        // POST api/customers
+        // {customer}
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesDefaultResponseType]
+        public ActionResult<Customer> Post([FromBody] CustomerDTO customerDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                customerRepository.Add(CustomerMapper.Map(customerDTO));                
+
+                return new CreatedAtRouteResult("GetCustomerById", new { id = customerDTO.Id }, customerDTO);
+
+            }
+            else
+            {
+                return new BadRequestObjectResult(ModelState);
+            }
         }
     }
 }
